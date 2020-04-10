@@ -1,0 +1,80 @@
+diamond:
+  config:
+    file: /etc/caocao/cdiamond/cdiamond.properties
+
+spring:
+  application:
+    name: ump-ygo
+  diamond:
+    group: ump-ygo-static
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+    druid:
+      initialSize: 3
+      minIdle: 3
+      maxActive: 20
+      maxWait: 10000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 60000
+      phy-timeout-millis: 1500000
+      validationQuery: SELECT 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # config filter 用于数据密码的解密
+      filters: config
+      connect-properties: config.decrypt=true
+      filter:
+        stat:
+          enabled: true
+          #            打印慢sql
+          log-slow-sql: true
+          #            慢sql时间
+          slow-sql-millis: 200
+        slf4j:
+          connection-log-enabled: false
+          statement-executable-sql-log-enable: true
+          result-set-log-enabled: false
+          statement-log-enabled: false
+          enabled: true
+        wall:
+          enabled: true
+#  codis:
+#    name: ${ygo.codis.name}
+#    password: ${ygo.codis.password}
+#    zk-server: ${ygo.codis.zkServer}
+#  kafka:
+#    bootstrap-servers: ${kafka.bootstrap.tcpservers}
+#    consumer:
+#      group-id: ump-ygo
+#      max-poll-records: ${kafka.max.poll.records}
+#      enable-auto-commit: ${kafka.enable.auto.commit}
+#    listener:
+#      concurrency: ${kafka.concurrency}
+#      poll-timeout: ${kafka.poll.timeout}
+
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper
+  notEmpty: true
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: false
+  params: count=countSql
+  support-methods-arguments: true
+
+# 应用名
+dubbo:
+  application:
+    name: ump-ygo
+  scan:
+    basePackages: com.caocao.bss.ygo.service.api.impl
+  protocols:
+    dubbo:
+      name: ${dubbo.protocol.name}
+      port: ${dubbo.protocol.port}
