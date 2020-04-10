@@ -1,7 +1,3 @@
-diamond:
-  config:
-    file: /etc/caocao/cdiamond/cdiamond.properties
-
 spring:
   application:
     name: ump-ygo
@@ -44,9 +40,9 @@ spring:
         wall:
           enabled: true
 #  codis:
-#    name: ${ygo.codis.name}
-#    password: ${ygo.codis.password}
-#    zk-server: ${ygo.codis.zkServer}
+#    name: ${codis.name}
+#    password: ${codis.password}
+#    zk-server: ${codis.zkServer}
 #  kafka:
 #    bootstrap-servers: ${kafka.bootstrap.tcpservers}
 #    consumer:
@@ -71,9 +67,9 @@ pagehelper:
 # 应用名
 dubbo:
   application:
-    name: ump-ygo
+    name: app-name
   scan:
-    basePackages: com.caocao.bss.ygo.service.api.impl
+    basePackages: package
   protocols:
     dubbo:
       name: ${dubbo.protocol.name}
